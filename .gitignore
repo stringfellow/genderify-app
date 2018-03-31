@@ -1,0 +1,4 @@
+*.pyc
+*.sw[op]
+.DS_Store
+Pipfile.lock
