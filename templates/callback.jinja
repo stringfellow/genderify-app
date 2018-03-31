@@ -1,0 +1,33 @@
+{% extends "base.jinja" %}
+{% block content %}
+    <div class="row">
+      <h3>Wait a mo...</h3>
+    </div>
+{% endblock %}
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var hash = location.hash.substring(1);
+      var args = JSON.parse(
+        '{"' +
+            hash.replace(/&/g, '","')
+                .replace(/=/g,'":"') 
+         + '"}',
+        function(key, value) {
+          return key === "" ? value : decodeURIComponent(value)
+        }
+      );
+      $.post({
+        url: '/submit',
+        data: args,
+        success: function(data, textStatus, jqXhr) {
+          var next = _.get(data, 'redirect', false);
+          if (next) {
+            window.location = next;
+          }
+        }
+      });
+    });
+  </script>
+
+{% endblock %}

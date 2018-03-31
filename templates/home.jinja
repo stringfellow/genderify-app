@@ -1,0 +1,48 @@
+{% extends "base.jinja" %}
+{% block content %}
+    <div class="row">
+      <div id="img-demo" class="text-center">
+        <img src="/static/demo.gif" alt="How to get the playlist link">
+        <p>Copy the Spotify playlist URI using the 'Share' menu item.</p>
+      </div>
+      <div id="main" class="col-md-offset-2 col-md-8">
+        <p>Paste your Spotify (public) playlist <strong>URI</strong> below, and get a summary of the gender split of your music!</p>
+        <form class="text-center">
+          <input name="playlistURI"
+                 class="form-control"
+                 placeholder="spotify:user:stringfellow:playlist:7bLaHSonXPHVRmkeMDk1dn"
+                 pattern="spotify:user:\w+:playlist:\w{22}"
+          ></input>
+          <input type="submit" class="btn-success btn btn-lg" value="Genderify it!"></input>
+        </form>
+        <div id="wait">
+          <p>Thanks, your playlist will be checked soon - check this URL soon:
+            <span id="result-url">http://...</span>
+          </p>
+      </div>
+    </div>
+    <div class="row">
+      <div id="info" class="col-md-offset-2 col-md-8">
+        <p>Note: This is not a production of Spotify. It is an open-source project of Steve Pike, Andy Cox and Ulrich Atz.</p>
+      </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+  <script type="text/javascript">
+    $('form').submit(function(data) {
+      var spotify_auth = "https://accounts.spotify.com/authorize?";
+      var parts = $('input').val().split(':');
+      var un = parts[2];
+      var plid = parts[4];
+      var uid = un + ':' + plid;
+      var query = {
+        client_id: "c0a8f2b89f9d44839ae7fdb4c2a42380",
+        redirect_uri: "http://localhost:5000/callback",
+        response_type: "token",
+        state: uid
+      };
+      window.location = spotify_auth + $.param(query);
+      return false;
+    });
+  </script>
+{% endblock %}

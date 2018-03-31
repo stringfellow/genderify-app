@@ -1,0 +1,27 @@
+body {
+    background-color: #282828;
+    color: #f8f8f8;
+}
+
+div#main {
+    border: solid 2px #20da20;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+}
+
+div#info {
+    color: #999;
+}
+
+div#wait {
+    display: none;
+}
+
+div#img-demo {
+    margin-top: 20px;
+
+.form-control {
+    border-color: #20da20;
+}
