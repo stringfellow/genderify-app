@@ -61,7 +61,7 @@ def results(username, pl_id):
         if result['state'] == 'waiting':
             curs.execute(
                 "SELECT * FROM tasks WHERE state = 'waiting' "
-                "ORDER BY timestamp ASC"
+                "ORDER BY timestamp DESC"
             )
             rows = curs.fetchall()
             total = len(rows)
