@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 import json
+import logging
 
 import sqlite3
 from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
+
+log = logging.getLogger(__name__)
 
 
 @app.route("/")
@@ -35,6 +38,7 @@ def save():
     )
     conn.commit()
     conn.close()
+    log.info("Saved new task for {} - {}".format(username, pl_id))
     return jsonify({
         'status': 'OK',
         'redirect': '/result/{}/{}'.format(username, pl_id)

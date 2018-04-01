@@ -18,7 +18,7 @@ def clean_up_db():
     )
     conn.commit()
     conn.close()
-    print(f"Timing out for less than {timeout}")
+    print("Timing out for less than {}".format(timeout))
 
 
 def process_tasks():
