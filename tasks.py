@@ -58,7 +58,7 @@ def process_tasks():
                     row['id'],
                 )
             )
-            curs.commit()
+            conn.commit()
             log.info("Updated.")
     conn.close()
     log.info("Done, bye!")
