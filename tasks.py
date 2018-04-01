@@ -66,3 +66,4 @@ def process_tasks():
 
 if __name__ == '__main__':
     clean_up_db()
+    process_tasks()
