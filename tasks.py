@@ -44,13 +44,15 @@ def process_tasks():
             report = genderifier.get_report()
             log.info("Done for row, report = %s", report)
             curs.execute(
-                "UPDATE tasks (female, male, unknown, state) VALUES "
-                "(?, ?, ?, ?) WHERE id = ?",
+                "UPDATE tasks "
+                "SET female = ?, male = ?, unknown = ?, state = ? "
+                "WHERE id = ?",
                 (
                     report['female'],
                     report['male'],
                     report['unknown'] + report['nonbinary'],
-                    'processed'
+                    'processed',
+                    row['id'],
                 )
             )
             curs.commit()
