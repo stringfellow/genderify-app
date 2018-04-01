@@ -32,6 +32,19 @@ def save():
     conn = sqlite3.connect('tasks.db')
     curs = conn.cursor()
     curs.execute(
+        "SELECT * FROM tasks WHERE username = ? AND playlist_id = ? "
+        "AND state = 'waiting' "
+        "ORDER BY timestamp DESC",
+        (username, pl_id)
+    )
+    result = curs.fetchone()
+    if result:
+        conn.close()
+        return jsonify({
+            'status': 'OK',
+            'redirect': '/result/{}/{}'.format(username, pl_id)
+        })
+    curs.execute(
         "INSERT INTO tasks (timestamp, username, playlist_id, token, state) "
         "VALUES (?, ?, ?, ?, ?)",
         (datetime.utcnow().isoformat(), username, pl_id, token, "waiting")
@@ -51,7 +64,8 @@ def results(username, pl_id):
     conn = sqlite3.connect('tasks.db')
     curs = conn.cursor()
     curs.execute(
-        "SELECT * FROM tasks WHERE username = ? and playlist_id = ?",
+        "SELECT * FROM tasks WHERE username = ? and playlist_id = ? "
+        "ORDER BY timestamp DESC",
         (username, pl_id)
     )
     result = curs.fetchone()

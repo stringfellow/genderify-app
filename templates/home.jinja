@@ -37,7 +37,7 @@
       var uid = un + ':' + plid;
       var query = {
         client_id: "c0a8f2b89f9d44839ae7fdb4c2a42380",
-        redirect_uri: "http://genderify.org/callback",
+        redirect_uri: "http://{{ request.host }}/callback",
         response_type: "token",
         state: uid
       };
