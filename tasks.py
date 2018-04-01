@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import logging
 import sqlite3
 from datetime import datetime, timedelta
 
 from genderify.gender_finder import Genderifier
+
+log = logging.getLogger(__name__)
 
 
 def clean_up_db():
@@ -26,7 +29,7 @@ def process_tasks():
     conn = sqlite3.connect('tasks.db')
     curs = conn.cursor()
     curs.execute(
-        "SELECT * FROM tasks WHERE status = 'waiting' "
+        "SELECT * FROM tasks WHERE state = 'waiting' "
         "ORDER BY timestamp ASC"
     )
     rows = curs.fetchall()
@@ -38,7 +41,7 @@ def process_tasks():
             db_file_path='genderify.db',
         ) as genderifier:
             genderifier.set_artists_batch_from_spotify_public_playlist(
-                username=row['username'], playlist_id=row['playlist_id']
+                user_id=row['username'], playlist_id=row['playlist_id']
             )
             genderifier.genderise_batch()
             report = genderifier.get_report()
