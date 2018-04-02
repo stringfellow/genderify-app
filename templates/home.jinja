@@ -14,6 +14,7 @@
           <form class="text-center">
             <input name="playlistURI"
                    class="form-control"
+                   type="url"
                    placeholder="https://open.spotify.com/user/stringfellow/playlist/681HLcJAfxpbJPMLTtTGXC?si=2iBQRsUgR6yVTA4pvbk6gw"
             ></input>
             <input type="submit" class="btn-success btn btn-lg" value="Genderify it!" id="submit"></input>
@@ -31,7 +32,11 @@
   <script type="text/javascript">
     $('form').submit(function(data) {
       var spotify_auth = "https://accounts.spotify.com/authorize?";
-
+      var url = $('input').val();
+      if (!_.startsWith(url, 'https://open.spotify.com/user/')) {
+        alert('You must use a Spotify playlist link!');
+        return false;
+      }
       var parts = $('input').val().split('/');
       var un = parts[4];
       var plid = parts[6].split('?')[0];
