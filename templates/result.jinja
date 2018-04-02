@@ -22,12 +22,34 @@
 
         {% elif context.state == 'processed' %}
 
-        <h3>
-          Out of a total of {{ context.total }} people...
+        {% if context.playlist_name %}
+        <h3 id="result-title">Analysis of
+          <a href="https://open.spotify.com/user/{{ context.username }}/playlist/{{ context.playlist_id }}" target="_blank">
+            {{ context.playlist_name }}
+          </a>
+          <span class="small" id="by">
+            by <a href="https://open.spotify.com/user/{{ context.username }}/" target="_blank">
+              {{ context.username }}
+            </a>
+          </span>
         </h3>
+        {% endif %}
+        {% if context.playlist_description %}
+        <blockquote id="playlist-description">{{ context.playlist_description }}</blockquote>
+        {% endif %}
+        <h4>Out of a total of {{ context.total }} people...</h4>
+        {% if context.male == 0 and context.female == 0 %}
+        <div class="text-center">
+          <span id="shrug">🤷</span>
+        </div>
+        {% else %}
         <div id="pie-container">
           <div class="ct-chart"></div>
         </div>
+        {% endif %}
+        {% if context.unknown %}
+        <h4>...there were {{ context.unknown }} we couldn't figure out.</h4>
+        {% endif %}
 
         {% elif context.state == 'failed' %}
 
@@ -48,40 +70,42 @@
   {% else %}
     var tuples = [
       ['female', {{ context.female }}],
-      ['male', {{ context.male }}],
-      ['unknown', {{ context.unknown }}]
+      ['male', {{ context.male }}]/*,
+      ['unknown', {{ context.unknown }}]*/
     ];
     tuples = _.filter(tuples, function(item) { return item[1] != 0; });
-    var data = {
-      labels: _.map(
-        tuples,
-        function(item){ return item[0]; }
-      ),
-      series: _.map(
-        tuples,
-        function(item){ return item[1]; }
-      ),
-    };
+    if (tuples.length > 0) {
+      var data = {
+        labels: _.map(
+          tuples,
+          function(item){ return item[0]; }
+        ),
+        series: _.map(
+          tuples,
+          function(item){ return item[1]; }
+        ),
+      };
 
-    var options = {
-      labelInterpolationFnc: function(value, idx) {
-        return data.series[idx] + ' ' + data.labels[idx];
-      }
-    };
+      var options = {
+        labelInterpolationFnc: function(value, idx) {
+          return data.series[idx] + ' ' + data.labels[idx];
+        }
+      };
 
-    var responsiveOptions = [
-      ['screen and (min-width: 640px)', {
-        chartPadding: 0,
-        labelOffset: 0,
-        labelDirection: 'explode'
-      }],
-      ['screen and (min-width: 1024px)', {
-        labelOffset: -40,
-        chartPadding: 0
-      }]
-    ];
+      var responsiveOptions = [
+        ['screen and (min-width: 640px)', {
+          chartPadding: 0,
+          labelOffset: 0,
+          labelDirection: 'explode'
+        }],
+        ['screen and (min-width: 1024px)', {
+          labelOffset: -40,
+          chartPadding: 0
+        }]
+      ];
 
-    new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+      new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+    }
   {% endif %}
   </script>
 {% endblock %}

@@ -48,13 +48,16 @@ def process_tasks():
             log.info("Done for row, report = %s", report)
             curs.execute(
                 "UPDATE tasks "
-                "SET female = ?, male = ?, unknown = ?, state = ? "
+                "SET female = ?, male = ?, unknown = ?, state = ?, "
+                "playlist_name = ?, playlist_description = ?"
                 "WHERE id = ?",
                 (
                     report['female'],
                     report['male'],
                     report['unknown'] + report['nonbinary'],
                     'processed',
+                    genderifier.playlist_name,
+                    genderifier.playlist_description,
                     row['id'],
                 )
             )

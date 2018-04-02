@@ -69,12 +69,27 @@ div.debug {
     stroke: #20da20;
 }
 
+h3#result-title {
+    color: #999;
+}
+
+blockquote {
+    color: #999;
+    font-style: italic;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+span#shrug {
+    font-size: 100px;
+}
+
 .ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {
-    fill: #ceff64;
+    fill: #80ff64;
 }
 
 .ct-series-b .ct-area, .ct-series-b .ct-slice-donut-solid, .ct-series-b .ct-slice-pie {
-    fill: #80ff64;
+    fill: #ceff64;
 }
 
 .ct-series-c .ct-area, .ct-series-c .ct-slice-donut-solid, .ct-series-c .ct-slice-pie {
