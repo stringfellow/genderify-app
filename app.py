@@ -86,6 +86,12 @@ def results(username, pl_id):
                 "total": total,
                 "index": ix + 1
             })
+        elif result['state'] == 'processed':
+            context['total'] = sum([
+                result['female'],
+                result['male'],
+                result['unknown'],
+            ])
     else:
         context = {'state': 'error', 'error': "No row found."}
     return render_template('result.jinja', context=context)

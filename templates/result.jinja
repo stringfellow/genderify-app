@@ -22,10 +22,13 @@
 
         {% elif context.state == 'processed' %}
 
-        <h3>Your results...</h3>
+        <h3>
+          Out of a total of {{ context.total }} people...
+        </h3>
         <div id="pie-container">
           <div class="ct-chart"></div>
         </div>
+
         {% elif context.state == 'failed' %}
 
         <h3>Failed...</h3>
@@ -44,9 +47,9 @@
     setTimeout(function() { location.reload(); }, 30000);
   {% else %}
     var tuples = [
-      ['Female', {{ context.female }}],
-      ['Male', {{ context.male }}],
-      ['Unknown', {{ context.unknown }}]
+      ['female', {{ context.female }}],
+      ['male', {{ context.male }}],
+      ['unknown', {{ context.unknown }}]
     ];
     tuples = _.filter(tuples, function(item) { return item[1] != 0; });
     var data = {
@@ -60,7 +63,11 @@
       ),
     };
 
-    var options = {};
+    var options = {
+      labelInterpolationFnc: function(value, idx) {
+        return data.series[idx] + ' ' + data.labels[idx];
+      }
+    };
 
     var responsiveOptions = [
       ['screen and (min-width: 640px)', {

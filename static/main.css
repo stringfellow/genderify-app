@@ -3,6 +3,10 @@ body {
     color: #f8f8f8;
 }
 
+a, a:hover, a:active {
+    color: #f8f8f8;
+}
+
 span#dot {
     color: #20da20;
 }
@@ -28,6 +32,10 @@ div#main {
 
 div#info {
     color: #999;
+}
+
+div#info h4 {
+    color: #f8f8f8;
 }
 
 div#wait {
@@ -58,6 +66,7 @@ div.debug {
     font-size: 3.5rem;
     color: #333;
     fill: #333;
+    stroke: #20da20;
 }
 
 .ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {
