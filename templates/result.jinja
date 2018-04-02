@@ -1,35 +1,40 @@
 {% extends "base.jinja" %}
+{% block head %}
+{% if context.state == 'processed' %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.css">
+{% endif %}
+{% endblock %}
 {% block content %}
     <div class="row">
-      {% if context.state == 'error' %}
-      <h3>Error...</h3>
-      <p>{{ context.error }}</p>
+      <div class="offset-lg-2 col-lg-8">
+        {% if context.state == 'error' %}
+        <h3>Error...</h3>
+        <p>{{ context.error }}</p>
 
-      {% elif context.state == 'waiting' %}
+        {% elif context.state == 'waiting' %}
 
-      <h3>Still checking!</h3>
-      <p>You can bookmark this page or wait a while and it will reload when it is ready.</p>
-        {% if context.index > 1 %}
-      <p>You're number {{ context.index }} in the queue...</p>
+        <h3>Still checking!</h3>
+        <p>You can bookmark this page or wait a while and it will reload when it is ready.</p>
+          {% if context.index > 1 %}
+        <p>You're number {{ context.index }} in the queue...</p>
+          {% endif %}
+
+        {% elif context.state == 'processed' %}
+
+        <h3>Your results...</h3>
+        <div id="pie-container">
+          <div class="ct-chart"></div>
+        </div>
+        {% elif context.state == 'failed' %}
+
+        <h3>Failed...</h3>
+        <p>Looks like we couldn't contact Spotify for some reason, or it timed out...</p>
+
         {% endif %}
-
-      {% elif context.state == 'processed' %}
-
-      <h3>Your results...</h3>
-      Males: {{ context.male }}
-      Females: {{ context.female }}
-      State: {{ context.state }}
-      ID: {{ context.playlist_id }}
-      User: {{ context.username }}
-
-      {% elif context.state == 'failed' %}
-
-      <h3>Failed...</h3>
-      <p>Looks like we couldn't contact Spotify for some reason, or it timed out...</p>
-
-      {% endif %}
-      <div class="debug">
-        {{ context }}
+        <div class="debug">
+          {{ context }}
+        </div>
       </div>
     </div>
 {% endblock %}
@@ -37,6 +42,39 @@
   <script type="text/javascript">
   {% if context.state != 'processed' %}
     setTimeout(function() { location.reload(); }, 30000);
+  {% else %}
+    var tuples = [
+      ['Female', {{ context.female }}],
+      ['Male', {{ context.male }}],
+      ['Unknown', {{ context.unknown }}]
+    ];
+    tuples = _.filter(tuples, function(item) { return item[1] != 0; });
+    var data = {
+      labels: _.map(
+        tuples,
+        function(item){ return item[0]; }
+      ),
+      series: _.map(
+        tuples,
+        function(item){ return item[1]; }
+      ),
+    };
+
+    var options = {};
+
+    var responsiveOptions = [
+      ['screen and (min-width: 640px)', {
+        chartPadding: 0,
+        labelOffset: 0,
+        labelDirection: 'explode'
+      }],
+      ['screen and (min-width: 1024px)', {
+        labelOffset: -40,
+        chartPadding: 0
+      }]
+    ];
+
+    new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
   {% endif %}
   </script>
 {% endblock %}

@@ -1,28 +1,28 @@
 {% extends "base.jinja" %}
 {% block content %}
     <div class="row">
-      <div id="img-demo" class="text-center">
-        <img src="/static/demo.gif" alt="How to get the playlist link">
-        <p>Copy the Spotify playlist URI using the 'Share' menu item.</p>
-      </div>
-      <div id="main" class="col-md-offset-2 col-md-8">
-        <p>Paste your Spotify (public) playlist <strong>URI</strong> below, and get a summary of the gender split of your music!</p>
-        <form class="text-center">
-          <input name="playlistURI"
-                 class="form-control"
-                 placeholder="spotify:user:stringfellow:playlist:7bLaHSonXPHVRmkeMDk1dn"
-                 pattern="spotify:user:\w+:playlist:\w{22}"
-          ></input>
-          <input type="submit" class="btn-success btn btn-lg" value="Genderify it!"></input>
-        </form>
-        <div id="wait">
-          <p>Thanks, your playlist will be checked soon - check this URL soon:
-            <span id="result-url">http://...</span>
-          </p>
+      <div id="img-demo" class="col-lg-8 offset-lg-2 text-center">
+        <img class="img-fluid" src="/static/demo.gif" alt="How to get the playlist link">
+        <p id="caption">Copy the Spotify playlist URI using the 'Share' menu item.</p>
       </div>
     </div>
     <div class="row">
-      <div id="info" class="col-md-offset-2 col-md-8">
+      <div class="col-lg-8 offset-lg-2">
+        <div id="main">
+          <p>Paste your Spotify playlist <strong>URI</strong> below to get a summary of the gender split!</p>
+          <form class="text-center">
+            <input name="playlistURI"
+                   class="form-control"
+                   placeholder="spotify:user:stringfellow:playlist:7bLaHSonXPHVRmkeMDk1dn"
+                   pattern="spotify:user:\w+:playlist:\w{22}"
+            ></input>
+            <input type="submit" class="btn-success btn btn-lg" value="Genderify it!" id="submit"></input>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div id="info" class="offset-lg-2 col-lg-8">
         <p>Note: This is not a production of Spotify. It is an open-source project of Steve Pike, Andy Cox and Ulrich Atz.</p>
       </div>
     </div>

@@ -3,6 +3,21 @@ body {
     color: #f8f8f8;
 }
 
+span#dot {
+    color: #20da20;
+}
+
+h2 {
+    color: #999;
+}
+
+div#head {
+    border-bottom: 1px solid white;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+
+}
+
 div#main {
     border: solid 2px #20da20;
     padding: 20px;
@@ -21,7 +36,49 @@ div#wait {
 
 div#img-demo {
     margin-top: 20px;
+}
+
+p#caption {
+    color: #999;
+}
+
+#submit {
+    margin-top: 20px;
+}
 
 .form-control {
     border-color: #20da20;
+}
+
+div.debug {
+    display: none;
+}
+
+.ct-label {
+    font-size: 3.5rem;
+    color: #333;
+    fill: #333;
+}
+
+.ct-series-a .ct-area, .ct-series-a .ct-slice-donut-solid, .ct-series-a .ct-slice-pie {
+    fill: #ceff64;
+}
+
+.ct-series-b .ct-area, .ct-series-b .ct-slice-donut-solid, .ct-series-b .ct-slice-pie {
+    fill: #80ff64;
+}
+
+.ct-series-c .ct-area, .ct-series-c .ct-slice-donut-solid, .ct-series-c .ct-slice-pie {
+    fill: #fff064;
+}
+
+#pie-container {
+    height: 360px;
+}
+
+
+@media screen and (min-width: 640px) {
+  .ct-label {
+    font-size: 2rem;
+  }
 }
