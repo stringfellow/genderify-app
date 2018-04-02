@@ -77,7 +77,7 @@ div.debug {
 }
 
 img#desktop-demo {
-  display: block;
+  display: inline;
 }
 
 img#mobile-demo {
@@ -95,7 +95,7 @@ img#mobile-demo {
   }
 
   img#mobile-demo {
-      display: block;
+      display: inline;
   }
 */
 }
