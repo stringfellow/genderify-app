@@ -76,9 +76,26 @@ div.debug {
     height: 360px;
 }
 
+img#desktop-demo {
+  display: block;
+}
 
-@media screen and (min-width: 640px) {
+img#mobile-demo {
+  display: none;
+}
+
+
+@media only screen and (max-width: 640px) {
   .ct-label {
     font-size: 2rem;
   }
+/*
+  img#desktop-demo {
+      display: none;
+  }
+
+  img#mobile-demo {
+      display: block;
+  }
+*/
 }

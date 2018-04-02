@@ -2,19 +2,19 @@
 {% block content %}
     <div class="row">
       <div id="img-demo" class="col-lg-8 offset-lg-2 text-center">
-        <img class="img-fluid" src="/static/demo.gif" alt="How to get the playlist link">
+        <img class="img-fluid" src="/static/desktop-demo.gif" alt="How to get the playlist link on your desktop" id="desktop-demo">
+        <img class="img-fluid" src="/static/mobile-demo.gif" alt="How to get the playlist link on your mobile device" id="mobile-demo">
         <p id="caption">Copy the Spotify playlist URI using the 'Share' menu item.</p>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-8 offset-lg-2">
         <div id="main">
-          <p>Paste your Spotify playlist <strong>URI</strong> below to get a summary of the gender split!</p>
+          <p>Paste your Spotify playlist <strong>link</strong> below to get a summary of the gender split!</p>
           <form class="text-center">
             <input name="playlistURI"
                    class="form-control"
-                   placeholder="spotify:user:stringfellow:playlist:7bLaHSonXPHVRmkeMDk1dn"
-                   pattern="spotify:user:\w+:playlist:\w{22}"
+                   placeholder="https://open.spotify.com/user/stringfellow/playlist/681HLcJAfxpbJPMLTtTGXC?si=2iBQRsUgR6yVTA4pvbk6gw"
             ></input>
             <input type="submit" class="btn-success btn btn-lg" value="Genderify it!" id="submit"></input>
           </form>
@@ -31,9 +31,10 @@
   <script type="text/javascript">
     $('form').submit(function(data) {
       var spotify_auth = "https://accounts.spotify.com/authorize?";
-      var parts = $('input').val().split(':');
-      var un = parts[2];
-      var plid = parts[4];
+
+      var parts = $('input').val().split('/');
+      var un = parts[4];
+      var plid = parts[6].split('?')[0];
       var uid = un + ':' + plid;
       var query = {
         client_id: "c0a8f2b89f9d44839ae7fdb4c2a42380",
