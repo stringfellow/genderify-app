@@ -6,7 +6,7 @@ import logging
 import sqlite3
 from flask import Flask, render_template, request, jsonify
 
-from .tasks import process_task
+from tasks import process_task
 
 app = Flask(__name__)
 log = logging.getLogger(__name__)

@@ -32,6 +32,7 @@ def process_task(task_id):
     """Process all the tasks."""
     conn = sqlite3.connect('tasks.db')
     curs = conn.cursor()
+    print("TASK ID: {}".format(task_id))
     curs.execute(
         "SELECT * FROM tasks WHERE id = ?", (task_id,)
     )
