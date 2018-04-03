@@ -62,6 +62,12 @@ def save():
     })
 
 
+@app.route("/requeue/<task_id>")
+def requeue(task_id):
+    """Just force a re-queue."""
+    process_task.delay(int(task_id))
+
+
 @app.route("/result/<username>/<pl_id>")
 def results(username, pl_id):
     """Show results, if we got them..."""

@@ -34,7 +34,7 @@ def process_task(task_id):
     curs = conn.cursor()
     print("TASK ID: {}".format(task_id))
     curs.execute(
-        "SELECT * FROM tasks WHERE id = ?", (task_id,)
+        "SELECT * FROM tasks WHERE id = ?", (int(task_id),)
     )
     row = curs.fetchone()
     row = dict(zip([d[0] for d in curs.description], row))
