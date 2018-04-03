@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from datetime import datetime
-import json
 import logging
 
 import sqlite3
 from flask import Flask, render_template, request, jsonify
-app = Flask(__name__)
 
+from tasks import process_task
+
+app = Flask(__name__)
 log = logging.getLogger(__name__)
 
 
@@ -50,12 +51,22 @@ def save():
         (datetime.utcnow().isoformat(), username, pl_id, token, "waiting")
     )
     conn.commit()
+    curs.execute("SELECT id FROM tasks ORDER BY id DESC LIMIT 1")
+    task_id = curs.fetchone()[0]
     conn.close()
     log.info("Saved new task for {} - {}".format(username, pl_id))
+    process_task.delay(task_id)
     return jsonify({
         'status': 'OK',
         'redirect': '/result/{}/{}'.format(username, pl_id)
     })
+
+
+@app.route("/requeue/<task_id>")
+def requeue(task_id):
+    """Just force a re-queue."""
+    process_task.delay(int(task_id))
+    return jsonify({'status': 'OK'})
 
 
 @app.route("/result/<username>/<pl_id>")
