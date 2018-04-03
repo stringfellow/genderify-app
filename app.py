@@ -52,7 +52,7 @@ def save():
     )
     conn.commit()
     curs.execute("SELECT id FROM tasks ORDER BY id DESC LIMIT 1")
-    task_id = curs.fetchone()
+    task_id = curs.fetchone()[0]
     conn.close()
     log.info("Saved new task for {} - {}".format(username, pl_id))
     process_task.delay(task_id)
@@ -66,6 +66,7 @@ def save():
 def requeue(task_id):
     """Just force a re-queue."""
     process_task.delay(int(task_id))
+    return jsonify({'status': 'OK'})
 
 
 @app.route("/result/<username>/<pl_id>")
