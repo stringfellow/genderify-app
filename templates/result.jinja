@@ -7,6 +7,7 @@
 {% if context.state == 'processed' %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
 {% endif %}
 {% endblock %}
 {% block content %}
@@ -69,7 +70,7 @@
         <table class="table table-dark table-striped">
           <thead>
             <tr>
-              <th>Name</th><th>Gender</th>
+              <th data-sortable="true">Name</th><th data-sortable="true">Gender</th>
             </tr>
           </thead>
           <tbody>
@@ -130,13 +131,15 @@
           name = '<a href="' + person.lastfm_url + '" target="_blank">' + name + '</a>';
         } else if (person.wiki_url) {
           name = '<a href="' + person.wiki_url + '" target="_blank">' + name + '</a>';
+        } else {
+          name = '<a class="unknown" href="https://en.wikipedia.org/wiki/' + _.replace(name, ' ', '_') + '" target="_blank">' + name + '</a>';
         }
         tbody.append(
           '<tr><td>' + name + '</td><td>' + gender + '</td></tr>'
         );
       });
     });
-
+    $('table').bootstrapTable();
   {% endif %}
   </script>
 {% endblock %}
