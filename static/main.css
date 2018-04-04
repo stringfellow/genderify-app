@@ -5,9 +5,12 @@ body {
 
 a, a:hover, a:active {
     color: #f8f8f8;
-    text-decoration-color: #20da21;
-    text-decoration-line: underline;
+    text-decoration: underline;
+    -webkit-text-decoration-style: dotted;
     text-decoration-style: dotted;
+    -webkit-text-decoration-color: #20da21;
+    text-decoration-color: #20da21;
+    -webkit-text-decoration-skip: ink;
 }
 
 header a, header a:hover, header a:active {

@@ -1,4 +1,8 @@
 {% extends "base.jinja" %}
+{% block title %}
+{% if context.state == 'processed' %}⚥ Genderified "{{ context.playlist_name }}"!
+{% else %}⚥ Genderifying your playlist...
+{% endif %}{% endblock %}
 {% block head %}
 {% if context.state == 'processed' %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.js"></script>
