@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import logging
+import json
 import sqlite3
 from datetime import datetime, timedelta
 
@@ -48,19 +49,22 @@ def process_task(task_id):
         )
         genderifier.genderise_batch()
         report = genderifier.get_report()
+        del(report['artists'])
+        result = json.dumps(report)
         log.info("Done for row, report = %s", report)
         curs.execute(
             "UPDATE tasks "
             "SET female = ?, male = ?, unknown = ?, state = ?, "
-            "playlist_name = ?, playlist_description = ?"
+            "playlist_name = ?, playlist_description = ?, result_json = ?"
             "WHERE id = ?",
             (
-                report['female'],
-                report['male'],
-                report['unknown'] + report['nonbinary'],
+                len(report['female']),
+                len(report['male']),
+                len(report['unknown']) + len(report['nonbinary']),
                 'processed',
                 genderifier.playlist_name,
                 genderifier.playlist_description,
+                result,
                 row['id'],
             )
         )

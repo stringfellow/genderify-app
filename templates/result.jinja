@@ -6,7 +6,7 @@
 {% endif %}
 {% endblock %}
 {% block content %}
-    <div class="row">
+    <div class="row" id="results-pie">
       <div class="offset-lg-2 col-lg-8">
         {% if context.state == 'error' %}
         <h3>Error...</h3>
@@ -24,20 +24,16 @@
 
         {% if context.playlist_name %}
         <h3 id="result-title">Analysis of
-          <a href="https://open.spotify.com/user/{{ context.username }}/playlist/{{ context.playlist_id }}" target="_blank">
-            {{ context.playlist_name }}
-          </a>
+          <a href="https://open.spotify.com/user/{{ context.username }}/playlist/{{ context.playlist_id }}" target="_blank">{{ context.playlist_name }}</a>
           <span class="small" id="by">
-            by <a href="https://open.spotify.com/user/{{ context.username }}/" target="_blank">
-              {{ context.username }}
-            </a>
+            by <a href="https://open.spotify.com/user/{{ context.username }}/" target="_blank">{{ context.username }}</a>
           </span>
         </h3>
         {% endif %}
         {% if context.playlist_description %}
         <blockquote id="playlist-description">{{ context.playlist_description }}</blockquote>
         {% endif %}
-        <h4>Out of a total of {{ context.total }} people...</h4>
+        <h4 id="summary-title">Out of a total of {{ context.total }} people...</h4>
         {% if context.male == 0 and context.female == 0 %}
         <div class="text-center">
           <span id="shrug">🤷</span>
@@ -48,7 +44,7 @@
         </div>
         {% endif %}
         {% if context.unknown %}
-        <h4>...there were {{ context.unknown }} we couldn't figure out.</h4>
+        <h4 class="text-right">...there {% if context.unknown == 1 %}was{% else %}were{% endif %} {{ context.unknown }} we're not sure about.</h4>
         {% endif %}
 
         {% elif context.state == 'failed' %}
@@ -62,16 +58,32 @@
         </div>
       </div>
     </div>
+    {% if context.state == 'processed' %}
+    <div class="row" id="results-table">
+      <div class="offset-lg-2 col-lg-8">
+        <h2>The full results...</h2>
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>Name</th><th>Gender</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% endif %}
 {% endblock %}
 {% block scripts %}
   <script type="text/javascript">
   {% if context.state != 'processed' %}
-    setTimeout(function() { location.reload(); }, 30000);
+    setTimeout(function() { location.reload(); }, 15000);
   {% else %}
+    var report = {{ context.result_json|safe }};
     var tuples = [
       ['female', {{ context.female }}],
-      ['male', {{ context.male }}]/*,
-      ['unknown', {{ context.unknown }}]*/
+      ['male', {{ context.male }}]
     ];
     tuples = _.filter(tuples, function(item) { return item[1] != 0; });
     if (tuples.length > 0) {
@@ -106,6 +118,21 @@
 
       new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
     }
+    var tbody = $('tbody'); 
+    _.each(['female', 'male', 'nonbinary', 'unknown'], function(gender) {
+      _.each(report[gender], function(person) {
+        var name = person.name;
+        if (person.lastfm_url) {
+          name = '<a href="' + person.lastfm_url + '" target="_blank">' + name + '</a>';
+        } else if (person.wiki_url) {
+          name = '<a href="' + person.wiki_url + '" target="_blank">' + name + '</a>';
+        }
+        tbody.append(
+          '<tr><td>' + name + '</td><td>' + gender + '</td></tr>'
+        );
+      });
+    });
+
   {% endif %}
   </script>
 {% endblock %}

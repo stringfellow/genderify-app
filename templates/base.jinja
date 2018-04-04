@@ -16,6 +16,7 @@
 
 </head>
 <body>
+  <header>
   <div class="container">
     <div class="row">
       <div class="offset-lg-2 col-lg-8" id="head">
@@ -23,10 +24,25 @@
         <h2>Find the gender balance in your Spotify playlists</h2>
       </div>
     </div>
+  </div>
+  </header>
+  <div class="container">
   {% block content %}
   {% endblock %}
   </div>
   {% block scripts %}
   {% endblock %}
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col offset-lg-2 mr-auto">
+          <span>Copyright Steve Pike, Andy Cox, Ulrich Atz 2018</span>
+        </div>
+        <div class="col ml-auto">
+          <a href="https://github.com/stringfellow/genderify/">Genderify on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

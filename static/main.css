@@ -5,7 +5,15 @@ body {
 
 a, a:hover, a:active {
     color: #f8f8f8;
+    text-decoration-color: #20da21;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
 }
+
+header a, header a:hover, header a:active {
+    text-decoration: none;
+}
+
 
 span#dot {
     color: #20da20;
@@ -106,6 +114,27 @@ img#desktop-demo {
 
 img#mobile-demo {
   display: none;
+}
+
+div.row#results-pie h4 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+div.row#results-pie h4#summary-title {
+    margin-top: 40px;
+}
+
+div.row#results-table {
+    margin-top: 30px;
+}
+
+footer {
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #999;
+    border-top: 1px solid #999;
 }
 
 
