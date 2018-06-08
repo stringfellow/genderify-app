@@ -18,6 +18,11 @@ a.unknown, a.unknown:hover, a.unknown:active {
     text-decoration-color: #ff4a4a;
 }
 
+a.btn {
+    text-decoration: none;
+    -webkit-text-decoration-style: none;
+}
+
 
 header a, header a:hover, header a:active {
     text-decoration: none;
@@ -32,6 +37,22 @@ h2 {
     color: #999;
 }
 
+input.form-control::placeholder {
+  color: #ddd;
+}
+input.form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #ddd;
+}
+input.form-control::-moz-placeholder { /* Firefox 19+ */
+  color: #ddd;
+}
+input.form-control:-ms-input-placeholder { /* IE 10+ */
+  color: #ddd;
+}
+input.form-control:-moz-placeholder { /* Firefox 18- */
+  color: #ddd;
+}
+
 div#head {
     border-bottom: 1px solid white;
     margin-bottom: 25px;
@@ -44,6 +65,16 @@ div#main {
     padding: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
+    border-radius: 3px;
+}
+
+div#playlists-intro {
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    background-color: #eee;
+    color: black;
     border-radius: 3px;
 }
 
@@ -167,6 +198,24 @@ footer {
     padding-bottom: 30px;
     color: #999;
     border-top: 1px solid #999;
+}
+
+svg.ct-chart-pie {
+    overflow: visible;
+}
+
+div.prepared-playlist {
+    margin-bottom: 20px;
+    border-bottom: 1px solid white;
+    padding-bottom: 20px;
+}
+
+div.prepared-playlist .ct-chart {
+    height: 400px;
+    width: 80%;
+    overflow: visible;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 

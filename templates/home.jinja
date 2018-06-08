@@ -1,17 +1,11 @@
 {% extends "base.jinja" %}
 {% block content %}
     <div class="row">
-      <div id="img-demo" class="col-lg-8 offset-lg-2 text-center">
-        <p>Want to know how your playlists are gender-split?</p>
-        <img class="img-fluid" src="/static/desktop-demo.gif" alt="How to get the playlist link on your desktop" id="desktop-demo">
-        {# <img class="img-fluid" src="/static/mobile-demo.gif" alt="How to get the playlist link on your mobile device" id="mobile-demo"> #}
-        <p id="caption">Copy the Spotify playlist URI using the 'Share' menu item.</p>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-lg-8 offset-lg-2">
         <div id="main">
-          <p>Paste your Spotify playlist <strong>link</strong> below to get a summary of the gender split!</p>
+          <p>Want to know how your playlists are gender-split?</p>
+          <p>Paste a Spotify playlist <strong>link</strong> below to get a summary of the gender split!</p>
+          <p>See below for how to do it in the app.</p>
           <form class="text-center">
             <input name="playlistURI"
                    class="form-control"
@@ -20,7 +14,14 @@
             ></input>
             <input type="submit" class="btn-success btn btn-lg" value="Genderify it!" id="submit"></input>
           </form>
+          <p>Or, have a look at some <a href="/playlists">selected female-focussed playlists</a>.</p>
         </div>
+      </div>
+    </div>
+      <div id="img-demo" class="col-lg-8 offset-lg-2 text-center">
+        <img class="img-fluid" src="/static/desktop-demo.gif" alt="How to get the playlist link on your desktop" id="desktop-demo">
+        {# <img class="img-fluid" src="/static/mobile-demo.gif" alt="How to get the playlist link on your mobile device" id="mobile-demo"> #}
+        <p id="caption">Copy the Spotify playlist URI using the 'Share' menu item.</p>
       </div>
     </div>
     <div class="row">
@@ -28,7 +29,10 @@
         <h4>Disclaimer</h4>
         <p><strong>Genderify is not affiliated with Spotify. It is an
         <a href="https://github.com/stringfellow/genderify" target="_blank">open source</a>
-        project of Steve Pike, Andy Cox and Ulrich Atz.</strong></p>
+        project of
+        <a href="https://twitter.com/CareerCoachCox">Andy Cox</a>,
+        <a href="https://twitter.com/stringfellow">Steve Pike</a>
+        and <a href="https://twitter.com/ulrichatz">Ulrich Atz</a>.</strong></p>
         <h4>What's this all about?</h4>
         <p>Genderify started out as an attempt by a couple of friends, both
         heavy Spotify users, to figure out how their music was gender-split, in
@@ -38,12 +42,14 @@
         <h4>What can I do with this information?</h4>
         <p>Learn something, gain introspection, achieve enlightenment! Joking
         aside, what we did was marvel at how male-biased our playlists are
-        and indeed the first 30,000 artists we retrieved from the Spotify
-        artist search API.</p>
+        and so, indeed, are the first 30,000 artists we retrieved from the
+        Spotify artist search API.</p>
         <p>What you may choose to do after realizing the constitution of your playlists, is
         to diversify your music listening - if you're into that. Or,
         ask some questions about how and why, in what ought to be a fairly
         balanced domain (music) there is still an 80:20 male:female bias...</p>
+        <p>But, if you just want to keep banging out tunes, then check out
+        <a href="/playlists">this page of female-centric playlists</a>.</p>
         <h4>How does it work?</h4>
         <ol>
           <li>We read your playlist from

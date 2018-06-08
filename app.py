@@ -18,6 +18,12 @@ def home():
     return render_template('home.jinja')
 
 
+@app.route("/playlists")
+def playlists():
+    """Playlists with their splits."""
+    return render_template('playlists.jinja')
+
+
 @app.route("/callback")
 def spotify_token():
     """Where spotify auth redirects to."""
