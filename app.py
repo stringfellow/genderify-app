@@ -6,6 +6,8 @@ import logging
 import sqlite3
 from flask import Flask, render_template, request, jsonify
 
+from genderify.gender_finder import Genderifier
+
 from tasks import process_task
 
 app = Flask(__name__)
@@ -45,7 +47,25 @@ def save():
         (username, pl_id)
     )
     result = curs.fetchone()
-    if result:
+
+    with Genderifier(
+        spotify_token=token,
+        db_file_path='genderify.db',
+    ) as genderifier:
+        playlist = genderifier.get_playlist(username, pl_id)
+
+    try:
+        last_updated = max([
+            datetime.strptime(item['added_at'], '%Y-%m-%dT%H:%M:%SZ')
+            for item in playlist['tracks']['items']
+        ])
+        playlist_result = datetime.strptime(result[1], '%Y-%m-%dT%H:%M:%S.%f')
+        re_check = playlist_result < last_updated
+
+    except (KeyError, IndexError, TypeError, ValueError):
+        re_check = True
+
+    if not re_check:
         conn.close()
         return jsonify({
             'status': 'OK',
