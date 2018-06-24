@@ -42,7 +42,6 @@ def save():
     curs = conn.cursor()
     curs.execute(
         "SELECT * FROM tasks WHERE username = ? AND playlist_id = ? "
-        "AND state = 'waiting' "
         "ORDER BY timestamp DESC",
         (username, pl_id)
     )
@@ -68,7 +67,7 @@ def save():
         )
     except (KeyError, IndexError, TypeError, ValueError) as err:
         log.exception(err)
-        re_check = True
+        re_check = result is None
 
     if not re_check:
         conn.close()
