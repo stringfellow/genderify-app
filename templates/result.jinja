@@ -6,6 +6,7 @@
 {% block head %}
 {% if context.state == 'processed' %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
 {% endif %}
@@ -49,7 +50,7 @@
         </div>
         {% endif %}
         {% if context.unknown %}
-        <h4 class="text-right">...there {% if context.unknown == 1 %}was{% else %}were{% endif %} {{ context.unknown }} we're not sure about.</h4>
+        <h4 class="text-right">...there {% if context.unknown == 1 %}was{% else %}were{% endif %} {{ context.unknown }} people we're not sure about.</h4>
         {% endif %}
 
         {% elif context.state == 'failed' %}
@@ -86,6 +87,7 @@
     setTimeout(function() { location.reload(); }, 15000);
   {% else %}
     var report = {{ context.result_json|safe }};
+    var total = {{ context.total }};
     var tuples = [
       ['female', {{ context.female }}],
       ['male', {{ context.male }}]
@@ -105,7 +107,7 @@
 
       var options = {
         labelInterpolationFnc: function(value, idx) {
-          return data.series[idx] + ' ' + data.labels[idx];
+          return numeral(data.series[idx] / total).format('0%') + ' ' + data.labels[idx];
         }
       };
 

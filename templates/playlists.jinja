@@ -1,5 +1,6 @@
 {% extends "base.jinja" %}
 {% block head %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.css">
 {% endblock %}
@@ -58,7 +59,7 @@ _.each(playlists, function(playlist, ix) {
 
   var options = {
     labelInterpolationFnc: function(value, idx) {
-      return data.series[idx] + ' ' + data.labels[idx];
+      return numeral(data.series[idx] / playlist.total).format('0%') + ' ' + data.labels[idx];
     }
   };
 
@@ -77,7 +78,6 @@ _.each(playlists, function(playlist, ix) {
   $('#playlists').append(
     template(playlist)
   );
-  console.log(playlist.id);
   new Chartist.Pie('#playlist-' + playlist.id + ' div.ct-chart', data, options, responsiveOptions);
 });
 
