@@ -1,130 +1,129 @@
 {% extends "base.jinja" %}
 {% block content %}
-    <div class="row">
-      <div class="col-lg-8 offset-lg-2">
-        <div id="main">
-          <p>Want to know how your playlists are gender-split?</p>
-          <p>Paste a Spotify playlist <strong>link</strong> below to get a summary of the gender split!</p>
-          <p>See below for how to do it in the app.</p>
-          <form class="text-center">
-            <input name="playlistURI"
-                   class="form-control"
-                   type="url"
-                   placeholder="https://open.spotify.com/user/stringfellow/playlist/681HLcJAfxpbJPMLTtTGXC?si=2iBQRsUgR6yVTA4pvbk6gw"
-                   onfocus="this.placeholder = ''"
-                   onblur="this.placeholder = 'https://open.spotify.com/user/stringfellow/playlist/681HLcJAfxpbJPMLTtTGXC?si=2iBQRsUgR6yVTA4pvbk6gw'"
-            ></input>
-            <input type="submit" class="btn-success btn btn-lg" value="Genderify it!" id="submit"></input>
-          </form>
-          <p>Or, have a look at some <a href="/playlists">selected female-focussed playlists</a>.</p>
-        </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div id="main">
+        <p>Want to know how your playlists are gender-split?</p>
+        <p>Paste a Spotify playlist <strong>link</strong> below to get a summary of the gender split!</p>
+        <p>See below for how to do it in the app.</p>
+        <form class="text-center">
+          <input name="playlistURI"
+                 class="form-control"
+                 type="url"
+                 placeholder="https://open.spotify.com/user/stringfellow/playlist/681HLcJAfxpbJPMLTtTGXC?si=2iBQRsUgR6yVTA4pvbk6gw"
+                 onfocus="this.placeholder = ''"
+                 onblur="this.placeholder = 'https://open.spotify.com/user/stringfellow/playlist/681HLcJAfxpbJPMLTtTGXC?si=2iBQRsUgR6yVTA4pvbk6gw'"
+          ></input>
+          <input type="submit" class="btn-success btn btn-lg" value="Genderify it!" id="submit"></input>
+        </form>
+        <p>Or, have a look at some <a href="/playlists">selected female-focussed playlists</a>.</p>
       </div>
     </div>
-      <div id="img-demo" class="col-lg-8 offset-lg-2 text-center">
-        <img class="img-fluid" src="/static/desktop-demo.gif" alt="How to get the playlist link on your desktop" id="desktop-demo">
-        {# <img class="img-fluid" src="/static/mobile-demo.gif" alt="How to get the playlist link on your mobile device" id="mobile-demo"> #}
-        <p id="caption">Copy the Spotify playlist URI using the 'Share' menu item.</p>
-      </div>
+    <div id="img-demo" class="col-lg-6 text-center">
+      <img class="img-fluid" src="/static/desktop-demo.gif" alt="How to get the playlist link on your desktop" id="desktop-demo">
+      {# <img class="img-fluid" src="/static/mobile-demo.gif" alt="How to get the playlist link on your mobile device" id="mobile-demo"> #}
+      <p id="caption">Copy the Spotify playlist URI using the 'Share' menu item.</p>
     </div>
-    <div class="row">
-      <div id="info" class="offset-lg-2 col-lg-8">
-        <h4>Disclaimer</h4>
-        <p><strong>Genderify is not affiliated with Spotify. It is an
-        <a href="https://github.com/stringfellow/genderify" target="_blank">open source</a>
-        project of
-        <a href="https://twitter.com/CareerCoachCox">Andy Cox</a>,
-        <a href="https://twitter.com/stringfellow">Steve Pike</a>
-        and <a href="https://twitter.com/ulrichatz">Ulrich Atz</a>.</strong></p>
-        <h4>What's this all about?</h4>
-        <p>Genderify started out as an attempt by a couple of friends, both
-        heavy Spotify users, to figure out how their music was gender-split, in
-        order to try to increase the number of female artists in their daily
-        listening... But it isn't so easy to search for (as-yet
-        personally-undiscovered) female artists!<p>
-        <h4>What can I do with this information?</h4>
-        <p>Learn something, gain introspection, achieve enlightenment! Joking
-        aside, what we did was marvel at how male-biased our playlists are
-        and so, indeed, are the first 30,000 artists we retrieved from the
-        Spotify artist search API.</p>
-        <p>What you may choose to do after realizing the constitution of your playlists, is
-        to diversify your music listening - if you're into that. Or,
-        ask some questions about how and why, in what ought to be a fairly
-        balanced domain (music) there is still an 80:20 male:female bias...</p>
-        <p>But, if you just want to keep banging out tunes, then check out
-        <a href="/playlists">this page of female-centric playlists</a>.</p>
-        <h4>How does it work?</h4>
-        <ol>
-          <li>We read your playlist from
-            <a href="https://www.spotify.com" target="_blank">Spotify</a>,
-            looking at the artist of each track</li>
-          <li>For each artist, we try and find them on
-            <a href="https://www.last.fm/" target="_blank">Last.fm</a>,
-            or <a href="https://en.wikipedia.org" target="_blank">Wikipedia</a></li>
-          <li>If it looks like the artist is a group, we try and find the
-            individual members of the group.</li>
-          <li>We then use the biography of the person to identify their gender,
-          using the first pronoun we encounter.</li>
-        </ol>
-        <h4>Why don't you represent non-binary, trans, fluid, ...?</h4>
-        <p>We tried. A little bit. It's really hard. You can
-        <a href="https://github.com/stringfellow/genderify/" target="_blank">look at the code</a>
-        that figures it all out and make it better if you
-        like; we tried to identify broadly 'non-binary' by looking for
-        'they', 'them', 'their' pronouns on artist pages that had no obvious
-        members section, but this has a really high false positive rate (i.e.
-        lots of those the script thinks are non-binary are actually just
-        groups, or the first pronoun in the bio is referring to the person's
-        band, like "Person joined Band for <strong>their</strong> third
-        album"). Under the hood, it does still store these people as
-        'nonbinary' but for the purposes of this website, we have put those
-        people into the same group as 'unknown' &ndash; we believe this
-        reflects the reality better, since we are not sure.</p>
-        <p>This is work in progress and we want to improve it. We support
-        non-traditional gender identities.</p>
-        <p>Genderify is not meant to be exclusive, it's just a hard problem to
-        solve using vague data from the Internet.</p>
-        <h4>Why are there so many unknowns?</h4>
-        <p>This is another problem we are still working on. 
-        Sometimes what appears to be a group is actually a person, and that
-        messes it up (see above question on non-binary etc.). Often there is no
-        biography at all. Sometimes the whole bio is written without using any
-        pronouns. Sometimes the artist's name appears differently to how it
-        does on Last.fm or Wikipedia. Sometimes Wikipedia results are nothing
-        to do with musicians at all, and sometimes we can figure this out... 
-        sometimes not. And so on. Data is messy.</p>
-        <h4>Why does this matter?</h4>
-        <p>Genderify matters because despite there being no difference between
-        men and women in their ability to create music, there still seems to be
-        a bias toward male artists in our exposure to music. Perhaps there is
-        some bias in the industry, or perhaps women are discouraged - through
-        exposure or through socialising - from creating music and making a
-        career out of it. 
-        We believe that social equality, representation, empowering minorities,
-        and working towards a more inclusive society does not only have a
-        benefit for the people immediately affected, in the long term it helps
-        everyone.</p>
-        <h4>Cool, so can I search for female artists on Spotify now?</h4>
-        <p>No, not that we're aware of. However, that is exactly the question we
-        asked ourselves that kicked off this project. Maybe someday Spotify and
-        other services will have gender in the artist's metadata, but as we've
-        now realised, it's not always so easy to find out.<p>
-        <p>Having said that, we know that Spotify have collaborated with
-        Smirnoff and <a href="https://twitter.com/honeydijon">Honey Dijon</a> to produce the
-        awesome <a href="https://smirnoffequalizer.com/">Smirnoff Equalizer</a>
-        which uses gender metadata (somehow)! Check it out to see the balance
-        in your listening history, and generate a personal playlist.</p>
-        <h4>What did you build this with?</h4>
-        <p>It's 
-        <a href="https://github.com/stringfellow/genderify/" target="_blank">a Python3 script</a>
-        that uses BeautifulSoup to scrape the sources
-        for biographies, and
-        <a href="https://github.com/stringfellow/genderify-app/" target="_blank">the website</a>
-        is a Flask app.</p>
-        <h4>Can I help make it better?</h4>
-        <p>Please do &ndash; it's here: <a href="https://github.com/stringfellow/genderify/">
-          https://github.com/stringfellow/genderify/</a>.</p>
-      </div>
+  </div>
+  <div class="row">
+    <div id="info" class="offset-lg-2 col-lg-8">
+      <h4>Disclaimer</h4>
+      <p><strong>Genderify is not affiliated with Spotify. It is an
+      <a href="https://github.com/stringfellow/genderify" target="_blank">open source</a>
+      project of
+      <a href="https://twitter.com/CareerCoachCox">Andy Cox</a>,
+      <a href="https://twitter.com/stringfellow">Steve Pike</a>
+      and <a href="https://twitter.com/ulrichatz">Ulrich Atz</a>.</strong></p>
+      <h4>What's this all about?</h4>
+      <p>Genderify started out as an attempt by a couple of friends, both
+      heavy Spotify users, to figure out how their music was gender-split, in
+      order to try to increase the number of female artists in their daily
+      listening... But it isn't so easy to search for (as-yet
+      personally-undiscovered) female artists!<p>
+      <h4>What can I do with this information?</h4>
+      <p>Learn something, gain introspection, achieve enlightenment! Joking
+      aside, what we did was marvel at how male-biased our playlists are
+      and so, indeed, are the first 30,000 artists we retrieved from the
+      Spotify artist search API.</p>
+      <p>What you may choose to do after realizing the constitution of your playlists, is
+      to diversify your music listening - if you're into that. Or,
+      ask some questions about how and why, in what ought to be a fairly
+      balanced domain (music) there is still an 80:20 male:female bias...</p>
+      <p>But, if you just want to keep banging out tunes, then check out
+      <a href="/playlists">this page of female-centric playlists</a>.</p>
+      <h4>How does it work?</h4>
+      <ol>
+        <li>We read your playlist from
+          <a href="https://www.spotify.com" target="_blank">Spotify</a>,
+          looking at the artist of each track</li>
+        <li>For each artist, we try and find them on
+          <a href="https://www.last.fm/" target="_blank">Last.fm</a>,
+          or <a href="https://en.wikipedia.org" target="_blank">Wikipedia</a></li>
+        <li>If it looks like the artist is a group, we try and find the
+          individual members of the group.</li>
+        <li>We then use the biography of the person to identify their gender,
+        using the first pronoun we encounter.</li>
+      </ol>
+      <h4>Why don't you represent non-binary, trans, fluid, ...?</h4>
+      <p>We tried. A little bit. It's really hard. You can
+      <a href="https://github.com/stringfellow/genderify/" target="_blank">look at the code</a>
+      that figures it all out and make it better if you
+      like; we tried to identify broadly 'non-binary' by looking for
+      'they', 'them', 'their' pronouns on artist pages that had no obvious
+      members section, but this has a really high false positive rate (i.e.
+      lots of those the script thinks are non-binary are actually just
+      groups, or the first pronoun in the bio is referring to the person's
+      band, like "Person joined Band for <strong>their</strong> third
+      album"). Under the hood, it does still store these people as
+      'nonbinary' but for the purposes of this website, we have put those
+      people into the same group as 'unknown' &ndash; we believe this
+      reflects the reality better, since we are not sure.</p>
+      <p>This is work in progress and we want to improve it. We support
+      non-traditional gender identities.</p>
+      <p>Genderify is not meant to be exclusive, it's just a hard problem to
+      solve using vague data from the Internet.</p>
+      <h4>Why are there so many unknowns?</h4>
+      <p>This is another problem we are still working on. 
+      Sometimes what appears to be a group is actually a person, and that
+      messes it up (see above question on non-binary etc.). Often there is no
+      biography at all. Sometimes the whole bio is written without using any
+      pronouns. Sometimes the artist's name appears differently to how it
+      does on Last.fm or Wikipedia. Sometimes Wikipedia results are nothing
+      to do with musicians at all, and sometimes we can figure this out... 
+      sometimes not. And so on. Data is messy.</p>
+      <h4>Why does this matter?</h4>
+      <p>Genderify matters because despite there being no difference between
+      men and women in their ability to create music, there still seems to be
+      a bias toward male artists in our exposure to music. Perhaps there is
+      some bias in the industry, or perhaps women are discouraged - through
+      exposure or through socialising - from creating music and making a
+      career out of it. 
+      We believe that social equality, representation, empowering minorities,
+      and working towards a more inclusive society does not only have a
+      benefit for the people immediately affected, in the long term it helps
+      everyone.</p>
+      <h4>Cool, so can I search for female artists on Spotify now?</h4>
+      <p>No, not that we're aware of. However, that is exactly the question we
+      asked ourselves that kicked off this project. Maybe someday Spotify and
+      other services will have gender in the artist's metadata, but as we've
+      now realised, it's not always so easy to find out.<p>
+      <p>Having said that, we know that Spotify have collaborated with
+      Smirnoff and <a href="https://twitter.com/honeydijon">Honey Dijon</a> to produce the
+      awesome <a href="https://smirnoffequalizer.com/">Smirnoff Equalizer</a>
+      which uses gender metadata (somehow)! Check it out to see the balance
+      in your listening history, and generate a personal playlist.</p>
+      <h4>What did you build this with?</h4>
+      <p>It's 
+      <a href="https://github.com/stringfellow/genderify/" target="_blank">a Python3 script</a>
+      that uses BeautifulSoup to scrape the sources
+      for biographies, and
+      <a href="https://github.com/stringfellow/genderify-app/" target="_blank">the website</a>
+      is a Flask app.</p>
+      <h4>Can I help make it better?</h4>
+      <p>Please do &ndash; it's here: <a href="https://github.com/stringfellow/genderify/">
+        https://github.com/stringfellow/genderify/</a>.</p>
     </div>
+  </div>
 {% endblock %}
 {% block scripts %}
   <script type="text/javascript">
