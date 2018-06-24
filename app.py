@@ -59,10 +59,15 @@ def save():
             datetime.strptime(item['added_at'], '%Y-%m-%dT%H:%M:%SZ')
             for item in playlist['tracks']['items']
         ])
-        playlist_result = datetime.strptime(result[1], '%Y-%m-%dT%H:%M:%S.%f')
-        re_check = playlist_result < last_updated
-
-    except (KeyError, IndexError, TypeError, ValueError):
+        last_checked = datetime.strptime(result[1], '%Y-%m-%dT%H:%M:%S.%f')
+        re_check = last_checked < last_updated
+        log.info(
+            'Playlist {} {} checked: {}, last updated: {}, recheck: {}'.format(
+                username, pl_id, last_checked, last_updated, re_check
+            )
+        )
+    except (KeyError, IndexError, TypeError, ValueError) as err:
+        log.exception(err)
         re_check = True
 
     if not re_check:
