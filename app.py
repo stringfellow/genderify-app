@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from datetime import datetime
+import csv
 import logging
 
 import sqlite3
@@ -23,7 +24,36 @@ def home():
 @app.route("/playlists")
 def playlists():
     """Playlists with their splits."""
-    return render_template('playlists.jinja')
+    conn = sqlite3.connect('tasks.db')
+    curs = conn.cursor()
+    playlists = []
+    with open('playlists.csv', 'r') as playlist_file:
+        reader = csv.reader(playlist_file)
+        for title, pl_id, username in reader:
+            curs.execute(
+                "SELECT * FROM tasks WHERE username = ? and playlist_id = ? "
+                "ORDER BY timestamp DESC",
+                (username, pl_id)
+            )
+            result = curs.fetchone()
+            if result:
+                result = dict(zip([d[0] for d in curs.description], result))
+                if result['state'] == 'processed':
+                    playlists.append({
+                        'title': title,
+                        'user': username,
+                        'id': pl_id,
+                        'total': sum([
+                            result['female'],
+                            result['male'],
+                            result['unknown'],
+                        ]),
+                        'female': result['female'],
+                        'male': result['male'],
+                        'unknown': result['unknown'],
+                    })
+    conn.close()
+    return render_template('playlists.jinja', context={'playlists': playlists})
 
 
 @app.route("/callback")

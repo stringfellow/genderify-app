@@ -7,8 +7,7 @@
   <div class="row">
     <div class="col-lg-8 offset-lg-2">
       <div id="playlists-intro">
-        <p>Here's a few playlists that are female focussed.</p>
-        <p>The stats are from when we added them to the page, so may no longer be accurate.</p>
+        <p>Here's a few playlists we've made or found that are female focussed - if you have some great suggestions for this page, let use know!</p>
       </div>
     </div>
   </div>
@@ -26,7 +25,12 @@
     </iframe>
   </div>
   <div class="col-md-5 text-center">
-    <h4><%= title %></h4>
+    <h4 id="result-title">
+      <a href="https://open.spotify.com/user/<%= user %>/playlist/<%= id %>" target="_blank"><%= title %></a>
+      <span class="small" id="by">
+        by <a href="https://open.spotify.com/user/<%= user %>/" target="_blank"><%= user %></a>
+      </span>
+    </h4>
     <div class="ct-chart"></div>
     <a role="button" class="btn btn-success btn-lg" href="/result/<%= user %>/<%= id %>">
       See full results
@@ -36,88 +40,7 @@
 </script>
 
 <script type="text/javascript">
-var playlists = [
-  {
-    title: "Womxn of the World",
-    id: "5wO97ZsA5pZ44PqPNduL0M",
-    user: "greenreveller",
-    female: 43,
-    male: 4,
-    unknown: 8
-  },
-  {
-    title: "50 Great Female Voices",
-    id: "37i9dQZF1DX9loJQLuEvap",
-    user: "spotify",
-    female: 51,
-    male: 2,
-    unknown: 5
-  },
-  {
-    title: "Women of Experimental",
-    id: "37i9dQZF1DWY7uXxMycXfq",
-    user: "spotify",
-    female: 37,
-    male: 1,
-    unknown: 8
-  },
-  {
-    title: "Female Country Artists",
-    id: "1o5KjTSZQwW7JqBEqNPELD",
-    user: "colette_smith27",
-    female: 22,
-    male: 0,
-    unknown: 5 
-  },
-  {
-    title: "Female Empowerment",
-    id: "2e1ISDljvBW6SoBnxtXxDV",
-    user: "lolocarlsson",
-    female: 89,
-    male: 8,
-    unknown: 16
-  },
-  {
-    title: "female acoustic covers",
-    id: "0R6AY59NGvXGsIKvnr5qWL",
-    user: "12142495608",
-    female: 23,
-    male: 14,
-    unknown: 28 
-  },
-  {
-    title: "Top Female Artists of 2017",
-    id: "37i9dQZF1DX27hx1vGd0BZ",
-    user: "spotify",
-    female: 48,
-    male: 12,
-    unknown: 11 
-  },
-  {
-    title: "Women of the Blues",
-    id: "37i9dQZF1DX8QB9Ys2nV17",
-    user: "spotify",
-    female: 38,
-    male: 5,
-    unknown: 14
-  },
-  {
-    title: "Women of Electronic",
-    id: "37i9dQZF1DWSIqiHHMYjiC",
-    user: "spotify",
-    female: 42,
-    male: 27,
-    unknown: 73 
-  }//,
-//  {
-//    title: "",
-//    id: "",
-//    user: "",
-//    female: ,
-//    male: ,
-//    unknown: 
-//  },
-];
+var playlists = {{ context.playlists|safe }};
 
 var template = _.template($('#template').text());
 
